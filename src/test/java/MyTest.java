@@ -13,12 +13,16 @@ class MyTest {
 	private Card aceHearts;
 	private Card kingSpades;
 	private Card twoClubs;
+	private Deck deck;
+
 
 	@BeforeEach
 	void setUp() {
 		aceHearts = new Card('H', 14);
 		kingSpades = new Card('S', 13);
 		twoClubs = new Card('C', 2);
+		deck = new Deck();
+
 	}
 
 	@Test
@@ -68,6 +72,51 @@ class MyTest {
 		assertEquals("King", newCard4.getValueAsString());
 	}
 
+	@Test
+	void testShuffleChangesOrder() {
+		// Copy initial deck
+		Deck firstDeck = new Deck();
+		// Create new deck
+		Deck secondDeck = new Deck();
+		System.out.println("First deck: " + firstDeck);
+		System.out.println("Second deck: " + secondDeck);
 
+		// Check that at least some cards are in different positions
+		boolean foundDifference = false;
+		for (int i = 0; i < firstDeck.size(); i++) {
+			if (!firstDeck.get(i).equals(secondDeck.get(i))) {
+				foundDifference = true;
+				break;
+			}
+		}
+		assertTrue(foundDifference);
+	}
 
+	@Test
+	void testNewDeckHas52Cards() {
+		System.out.println("Deck size: " + deck.size());
+		assertEquals(52, deck.size());
+
+	}
+
+	@Test
+	void testNewDeckAfterDealing() {
+		// Deal some cards
+		deck.dealCard();
+		deck.dealCard();
+
+		// Create new deck
+		deck.newDeck();
+
+		assertEquals(52, deck.size());
+	}
+
+	@Test
+	void testRemainingCards() {
+		assertEquals(52, deck.remainingCards());
+		deck.dealCard();
+		System.out.println("Card Dealt: " + deck.dealCard());
+		assertEquals(50, deck.remainingCards());
+	}
 }
+

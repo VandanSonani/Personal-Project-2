@@ -13,6 +13,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.control.Menu;
 
 public class MyController implements Initializable {
 
@@ -21,6 +22,9 @@ public class MyController implements Initializable {
 
     @FXML
     private BorderPane root2;
+
+    @FXML
+    private Menu settingsMenu;
 
     @FXML
     private TextField textField;

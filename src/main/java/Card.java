@@ -22,12 +22,12 @@ public class Card {
         return value;
     }
 
-    private boolean isValidSuit(char suit) {
+    public boolean isValidSuit(char suit) {
         char upperSuit = Character.toUpperCase(suit);
         return upperSuit == 'H' || upperSuit == 'D' || upperSuit == 'C' || upperSuit == 'S';
     }
 
-    private boolean isValidValue(int value) {
+    public boolean isValidValue(int value) {
         return value >= 2 && value <= 14;
     }
 

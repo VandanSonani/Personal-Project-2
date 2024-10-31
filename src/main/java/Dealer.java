@@ -1,7 +1,13 @@
-public class Dealer {
+import java.util.ArrayList;
 
-//    Deck theDeck;
-//    ArrayList<Card> dealersHand;
-//    Dealer();
-//    public ArrayList<Card> dealHand();
-}
+    public class Dealer {
+
+        private ArrayList<Card> deck;
+
+        public void newDeck() {
+
+            deck = new ArrayList<>();
+
+        }
+
+    }
