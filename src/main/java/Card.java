@@ -4,12 +4,6 @@ public class Card {
 
 
     public Card(char suit, int value) {
-        if (!isValidSuit(suit)) {
-            System.out.println("Invalid suit. Must be H, D, C, or S");
-        }
-        if (!isValidValue(value)) {
-            System.out.println("Invalid value. Must be between 2 and 14");
-        }
         this.suit = Character.toUpperCase(suit);
         this.value = value;
     }
@@ -20,15 +14,6 @@ public class Card {
 
     public int getValue() {
         return value;
-    }
-
-    public boolean isValidSuit(char suit) {
-        char upperSuit = Character.toUpperCase(suit);
-        return upperSuit == 'H' || upperSuit == 'D' || upperSuit == 'C' || upperSuit == 'S';
-    }
-
-    public boolean isValidValue(int value) {
-        return value >= 2 && value <= 14;
     }
 
     public String getValueAsString() {

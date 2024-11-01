@@ -6,6 +6,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
+<StackPane prefHeight="850.0" prefWidth="900.0" style="-fx-background-color: blue;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
 <VBox fx:id="root" prefHeight="850.0" prefWidth="900.0" style="-fx-background-color: green;" styleClass="vbox" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1">
    <Label alignment="CENTER" prefHeight="264.0" prefWidth="314.0" text="Welcome to 3-Card Poker" textAlignment="CENTER" wrapText="true">
       <font>
@@ -54,3 +55,4 @@
    </Button>
 
 </VBox>
+</StackPane>
