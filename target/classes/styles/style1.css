@@ -1,12 +1,27 @@
-.button{
-	-fx-font-size: 14px;
-	-fx-font-weight: bold;
-	-fx-background-color: green
+.pane {
+	-fx-background-color: blue;
 }
 
-.vbox{
-	-fx-background-color: purple;
-
+.vbox {
+	-fx-background-color: green;
+	-fx-border-color: #006400;
+	-fx-border-width: 100;
 }
 
+.button-play {
+	-fx-background-color: #b5ffaa;
+	-fx-text-fill: #000000;
+	-fx-background-radius: 100;
+}
 
+.button-exit {
+	-fx-background-color: #ff6aa0;
+	-fx-border-width: 2;
+	-fx-background-radius: 100;
+}
+
+.menubar {
+	-fx-background-color: #006400;
+	-fx-border-color: white;
+	-fx-border-width: 2;
+}

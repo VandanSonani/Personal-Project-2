@@ -19,7 +19,7 @@ public class Deck extends ArrayList<Card>{
             }
         }
 
-        Collections.shuffle(this);
+        Collections.shuffle(this); // randomizing the cards in the deck
 
 
 

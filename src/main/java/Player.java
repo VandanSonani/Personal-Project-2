@@ -1,9 +1,89 @@
-public class Player {
+import java.util.ArrayList;
 
-//    ArrayList<Card> hand;
-//    int anteBet;
-//    int playBet;
-//    int pairPlusBet;
-//    int totalWinnings;
-//    Player();
+public class Player {
+    private ArrayList<Card> hand;
+    private int anteBet;
+    private int playBet;
+    private int pairPlusBet;
+    private int totalWinnings;
+
+    public Player() {
+        this.hand = new ArrayList<>();
+        this.anteBet = 0;
+        this.playBet = 0;
+        this.pairPlusBet = 0;
+        this.totalWinnings = 0;
+    }
+
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
+
+    public void setHand(ArrayList<Card> hand) {
+        this.hand = hand;
+    }
+
+    public void setTotalWinnings(int totalWinnings) {
+        this.totalWinnings = totalWinnings;
+    }
+
+    public int getAnteBet() {
+        return anteBet;
+    }
+
+    public void setAnteBet(int anteBet) {
+        if (anteBet >= 5 && anteBet <= 25) {
+            this.anteBet = anteBet;
+        } else {
+            throw new IllegalArgumentException("Ante bet must be between $5 and $25");
+        }
+    }
+
+    public int getPlayBet() {
+        return playBet;
+    }
+
+    public void setPlayBet(int playBet) {
+        if (playBet == this.anteBet) {
+            this.playBet = playBet;
+        } else {
+            throw new IllegalArgumentException("Play bet must equal ante bet");
+        }
+    }
+
+    public int getPairPlusBet() {
+        return pairPlusBet;
+    }
+
+    public void setPairPlusBet(int pairPlusBet) {
+        if (pairPlusBet >= 5 && pairPlusBet <= 25 || pairPlusBet == 0) {
+            this.pairPlusBet = pairPlusBet;
+        } else {
+            throw new IllegalArgumentException("Pair Plus bet must be between $5 and $25");
+        }
+    }
+
+    public int getTotalWinnings() {
+        return totalWinnings;
+    }
+
+    public void updateWinnings(int amount) {
+        this.totalWinnings += amount;
+    }
+
+    public void clearBets() {
+        this.anteBet = 0;
+        this.playBet = 0;
+        this.pairPlusBet = 0;
+    }
+
+    public void clearHand() {
+        this.hand.clear();
+    }
+
+    public void reset() {
+        clearHand();
+        clearBets();
+        this.totalWinnings = 0;
+    }
 }

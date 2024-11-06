@@ -2,32 +2,79 @@
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
+import javafx.scene.Scene;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.*;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.control.Menu;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.HBox;
+import javafx.stage.Stage;
 
 public class MyController implements Initializable {
+
+    public Button exitGame;
+
+    public Button playGame;
+
+    public Player player1;
+    public Player player2;
+
+    private Dealer dealer = new Dealer();
+    private Player playerOne = new Player();
+    private Player playerTwo = new Player();
+
+
+    private boolean isPlayer1Folded = false;
+    private boolean isPlayer2Folded = false;
+
+    @FXML
+    private Button foldPlayer1Button;
+
+    @FXML
+    private Button foldPlayer2Button;
+
+    @FXML
+    private TextField Ante;
+
+    @FXML
+    private TextField Ante2;
+    @FXML
+    private TextField PairPlus;
+    @FXML
+    private TextField PairPlus2;
+
+
+    @FXML
+    private HBox player1Hand1;
+    @FXML
+    private HBox player2Hand2;
+    @FXML
+    private HBox dealerHand1;
+
 
     @FXML
     private VBox root;
 
     @FXML
-    private BorderPane root2;
+    private Pane root2;
 
     @FXML
     private Menu settingsMenu;
 
     @FXML
     private TextField textField;
+
+
 
     @FXML
     private TextField putText;
@@ -42,65 +89,181 @@ public class MyController implements Initializable {
         // TODO Auto-generated method stub
 
     }
-    //method so that the controller created for second view can update the text
-    //field with the text from the first view
-    public void setText(){
-        putText.setText(textEntered);
-        System.out.println("hello from setText");
+
+    @FXML
+    public void handleExit(ActionEvent e){
+        System.exit(0);
     }
 
-    public void setText2(){
-        textField.setText(textEntered);
-        System.out.println("hello from setText");
+    @FXML
+    private void exitApplication(ActionEvent event) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Exit Confirmation");
+        alert.setHeaderText("Are you sure you want to exit?");
+        alert.setContentText("Choose 'Yes' to exit or 'No' to resume.");
+
+        ButtonType yesButton = new ButtonType("Yes");
+        ButtonType noButton = new ButtonType("No", ButtonType.CANCEL.getButtonData());
+
+        alert.getButtonTypes().setAll(yesButton, noButton);
+
+        alert.showAndWait().ifPresent(response -> {
+            if (response == yesButton) {
+                System.exit(0);
+            }
+        });
     }
 
-    public void helloMethod(ActionEvent e) throws IOException {
+    @FXML
+    private void loadGamePage(ActionEvent event) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/GamePage.fxml"));
+            Parent root2 = loader.load();
+            root2.getStylesheets().add("/styles/style2.css");//set style
+            root.getScene().setRoot(root2);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
-        textEntered = textField.getText(); //get text entered by user
-        System.out.println(textEntered);
+    @FXML
+    private void dealCardsFunc() {
+        // Clear existing hands
+        playerOne.setHand(dealer.dealHand());
+        playerTwo.setHand(dealer.dealHand());
+        dealer.dealersHand = dealer.dealHand();
 
-        //get instance of the loader class
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Myfxml2.fxml"));
-        Parent root2 = loader.load(); //load view into parent
-        MyController myctr = loader.getController();//get controller created by FXMLLoader
-        myctr.setText();//use MyLoader class method for setText()
+        System.out.println("Player 1 Hand: " + playerOne.getHand());
+        System.out.println("Player 2 Hand: " + playerTwo.getHand());
+        System.out.println("Dealer Hand: " + dealer.dealersHand);
+        System.out.println("Cards left: " + dealer.theDeck.remainingCards());
 
-        root2.getStylesheets().add("/styles/style2.css");//set style
+        foldPlayer1Button.setDisable(false);
+        foldPlayer2Button.setDisable(false);
+        Ante.setDisable(true);
+        Ante2.setDisable(true);
+        PairPlus.setDisable(true);
+        PairPlus2.setDisable(true);
 
-        root.getScene().setRoot(root2);//update scene graph
-
-
-       	/* original way to load views...nothing shared across FXML files
-         
-         Parent root2 = FXMLLoader.load(getClass()
-                 .getResource("/FXML/Myfxml2.fxml"));
-        root2.getStylesheets().add("/styles/style2.css");
-		 
-		 root.getScene().setRoot(root2);
-       */
+        displayHand(playerOne.getHand(), player1Hand1, false);
+        displayHand(playerTwo.getHand(), player2Hand2, false);
+        displayHand(dealer.dealersHand, dealerHand1, true);
 
 
     }
 
-    public void b1Method(ActionEvent e) throws IOException{
-
-        textEntered = putText.getText();
-        System.out.println(textEntered);
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/Myfxml.fxml"));
-        Parent root = loader.load();
-        MyController myctr = loader.getController();
-        myctr.setText2();
-        root2.getScene().setRoot(root);
-        
-        /*
-		Parent root = FXMLLoader.load(getClass()
-                .getResource("/FXML/Myfxml.fxml"));
-		 
-		 root2.getScene().setRoot(root);
-         */
+    private ImageView createCardImageView(String imagePath) {
+        Image cardImage = new Image(getClass().getResourceAsStream(imagePath));
+        ImageView imageView = new ImageView(cardImage);
+        imageView.setFitWidth(100);
+        imageView.setFitHeight(175);
+        imageView.setPreserveRatio(true);
+        return imageView;
     }
 
+    private void displayHand(ArrayList<Card> hand, HBox container, boolean faceDown) {
+        container.getChildren().clear();
+
+        for (Card card : hand) {
+            ImageView cardView;
+            if (faceDown) {
+                cardView = createCardImageView("/Cards/back-card.png");
+            } else {
+                cardView = createCardImageView(card.getImagePath());
+            }
+            container.getChildren().add(cardView);
+        }
+    }
+
+
+    @FXML
+    public void foldPlayer1() {
+        foldCards(1);
+    }
+
+    @FXML
+    public void foldPlayer2() {
+        foldCards(2);
+    }
+
+    @FXML
+    private void showFoldMessage(String message) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Fold");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+    @FXML
+    private void resetGameForNextRound() {
+        isPlayer1Folded = false;
+        isPlayer2Folded = false;
+
+    }
+
+    @FXML
+    private void foldCards(int playerNumber) {
+        if (playerNumber == 1) {
+            isPlayer1Folded = true;
+            displayHand(playerOne.getHand(), player1Hand1, true);
+            showFoldMessage("Player 1 has folded. Dealer wins this round!");
+        } else if (playerNumber == 2) {
+            isPlayer2Folded = true;
+            displayHand(playerTwo.getHand(), player2Hand2, true);
+
+            showFoldMessage("Player 2 has folded. Dealer wins this round!");
+        }
+    }
+
+    @FXML
+    private void playCards() {
+        // Check if both players have folded
+        if (isPlayer1Folded && isPlayer2Folded) {
+            resetGameForNextRound();
+            return;
+        }
+
+        foldPlayer1Button.setDisable(true);
+        foldPlayer2Button.setDisable(true);
+        Ante.setDisable(false);
+        Ante2.setDisable(false);
+        PairPlus.setDisable(false);
+        PairPlus2.setDisable(false);
+
+
+        displayHand(dealer.dealersHand, dealerHand1, false);
+
+        if (!isPlayer1Folded) {
+            int player1Result = ThreeCardLogic.compareHands(dealer.dealersHand, playerOne.getHand());
+//            updatePlayerWinnings(player1, player1Result);
+        }
+
+        if (!isPlayer2Folded) {
+            int player2Result = ThreeCardLogic.compareHands(dealer.dealersHand, playerTwo.getHand());
+//            updatePlayerWinnings(player2, player2Result);
+        }
+
+    }
+
+    private void updatePlayerWinnings(Player player, int compareResult) {
+        int anteBet = player.getAnteBet();
+        int playBet = player.getPlayBet();
+        int pairPlusBet = player.getPairPlusBet();
+
+        if (compareResult == 1) {
+            // Dealer wins
+            player.setTotalWinnings(player.getTotalWinnings() - anteBet - playBet - pairPlusBet);
+        }
+        else if (compareResult == 2) {
+            // Player wins
+            player.updateWinnings(anteBet + playBet);
+        }
+        else {
+            // Tie
+            player.setTotalWinnings(player.getTotalWinnings() - pairPlusBet);
+        }
+        }
 
 
 }

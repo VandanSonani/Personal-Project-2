@@ -29,11 +29,12 @@ public class JavaFXTemplate extends Application {
 		try {
 			// Read file fxml and draw interface.
 			Parent root = FXMLLoader.load(getClass()
-					.getResource("/FXML/Myfxml.fxml"));
+					.getResource("/FXML/WelcomePage.fxml"));
 
 			primaryStage.setTitle("My Application");
 			Scene s1 = new Scene(root, 900,850);
 			s1.getStylesheets().add("/styles/style1.css");
+//			s2.getStylesheets().add("/styles/style2.css");
 			primaryStage.setScene(s1);
 			primaryStage.show();
 
@@ -42,6 +43,8 @@ public class JavaFXTemplate extends Application {
 			System.exit(1);
 		}
 	}
+
+
 
 	public static void main(String[] args) {
 		launch(args);
