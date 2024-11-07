@@ -2,27 +2,38 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 
-<Pane prefHeight="850" prefWidth="900" styleClass="pane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MyController">
-	<Label layoutX="8.0" layoutY="56.0" text="Wager:" />
-	<TextField layoutX="8.0" layoutY="72.0" />
-	<Label layoutX="8.0" layoutY="156.0" text="Pair Plus:" />
-	<TextField fx:id="PairPlus" layoutX="8.0" layoutY="172" />
-	<Label layoutX="8.0" layoutY="256.0" text="Ante:" />
-	<TextField fx:id="Ante" layoutX="8.0" layoutY="272" />
-	<Label layoutX="8.0" layoutY="356.0" text="Total Winnings:" />
-	<TextField disable="true" layoutX="8.0" layoutY="372" />
+<Pane fx:id="root2" prefHeight="850" prefWidth="900" styleClass="pane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MyController">
 
-	<Label layoutX="733.0" layoutY="56.0" text="Wager:" />
-	<TextField layoutX="733.0" layoutY="72.0" />
-	<Label layoutX="733.0" layoutY="156.0" text="Pair Plus:" />
-	<TextField fx:id="PairPlus2" layoutX="733.0" layoutY="172" />
-	<Label layoutX="733.0" layoutY="256.0" text="Ante:" />
-	<TextField fx:id="Ante2" layoutX="733.0" layoutY="272" />
-	<Label layoutX="733.0" layoutY="356.0" text="Total Winnings:" />
-	<TextField disable="true" layoutX="733.0" layoutY="372" />
 
+<!--PLAYER1'S BETTING-->
+
+	<Label layoutX="8.0" layoutY="46.0" styleClass="bet-labels" text="Pair Plus:" />
+	<TextField fx:id="PairPlus" layoutX="8.0" layoutY="72" />
+	<Label layoutX="8.0" layoutY="146.0" styleClass="bet-labels" text="Ante:" />
+	<TextField fx:id="Ante" layoutX="8.0" layoutY="172" />
+
+	<Label layoutX="8.0" layoutY="246.0" styleClass="bet-labels" text="Play:" />
+	<TextField fx:id="PlayBet" disable="true" layoutX="8.0" layoutY="272" />
+
+	<Label layoutX="8.0" layoutY="346.0" styleClass="bet-labels" text="Cash:" />
+	<TextField fx:id="Cash" disable="true" layoutX="8.0" layoutY="372" />
+
+<!--PLAYER2'S BETTING-->
+
+	<Label layoutX="733.0" layoutY="46.0" styleClass="bet-labels" text="Pair Plus:" />
+	<TextField fx:id="PairPlus2" layoutX="733.0" layoutY="72" />
+	<Label layoutX="733.0" layoutY="146.0" styleClass="bet-labels" text="Ante:" />
+	<TextField fx:id="Ante2" layoutX="733.0" layoutY="172" />
+
+	<Label layoutX="733.0" layoutY="246.0" styleClass="bet-labels" text="Play:" />
+	<TextField fx:id="PlayBet2" disable="true" layoutX="733.0" layoutY="272" />
+
+
+	<Label layoutX="733.0" layoutY="346.0" styleClass="bet-labels" text="Cash:" />
+	<TextField fx:id="Cash2" disable="true" layoutX="733.0" layoutY="372" />
+
+<!--MENU BAR-->
 	<MenuBar prefHeight="30.0" prefWidth="81.0" styleClass="menubar">
 		<menus>
 			<Menu mnemonicParsing="false" text="Options">
@@ -30,28 +41,30 @@
 					<MenuItem mnemonicParsing="false" onAction="#exitApplication" text="Exit" />
 				</items>
 				<items>
-					<MenuItem mnemonicParsing="false" text="Fresh Start" />
+					<MenuItem mnemonicParsing="false" onAction="#freshStartMethod" text="Fresh Start" />
 				</items>
 				<items>
-					<MenuItem mnemonicParsing="false" text="NewLook" />
+					<MenuItem mnemonicParsing="false" onAction="#applyGameNewLook" text="NewLook" />
 				</items>
 			</Menu>
 		</menus>
 	</MenuBar>
 
-	<Button fx:id="foldPlayer1Button" layoutX="370.0" layoutY="800.0" mnemonicParsing="false" onAction="#foldPlayer1" text="Player1 Fold" />
-	<Button fx:id="foldPlayer2Button" layoutX="490" layoutY="800" mnemonicParsing="false" onAction="#foldPlayer2" text="Player2 Fold" />
-	<Button layoutX="449.0" layoutY="723.0" mnemonicParsing="false" onAction="#dealCardsFunc" text="Deal" />
-	<Button layoutX="450.0" layoutY="762.0" mnemonicParsing="false" onAction="#playCards" text="Play" />
+<!--GAMEPLAY BUTTONS, FOLD, DEAL, PLAY. -->
 
-	<HBox fx:id="player1Hand1" layoutY="450" prefHeight="250" prefWidth="450" spacing="10" alignment="CENTER" />
-	<HBox fx:id="player2Hand2" layoutX="478.0" layoutY="450" prefHeight="250" prefWidth="422.0" spacing="10" alignment="CENTER" />
-	<HBox fx:id="dealerHand1" layoutX="250" layoutY="100" prefHeight="250" prefWidth="400" spacing="10" alignment="CENTER" />
-	<Label layoutX="427.0" layoutY="45.0" text="Dealer">
-		<font>
-			<Font size="32.0" />
-		</font>
-	</Label>
-	<Label layoutX="152.0" layoutY="728.0" text="Player 1" />
-	<Label layoutX="746.0" layoutY="728.0" text="Player 2" />
+	<Button fx:id="foldPlayer1Button" disable="true" layoutX="370.0" layoutY="800.0" mnemonicParsing="false" onAction="#foldPlayer1" text="Player1 Fold" />
+	<Button fx:id="foldPlayer2Button" disable="true" layoutX="490" layoutY="800" mnemonicParsing="false" onAction="#foldPlayer2" text="Player2 Fold" />
+	<Button fx:id="dealButton" layoutX="449.0" layoutY="723.0" mnemonicParsing="false" onAction="#dealCardsFunc" text="Deal" />
+	<Button fx:id="playButton" disable = "true" layoutX="450.0" layoutY="762.0" mnemonicParsing="false" onAction="#playCards" text="Play" />
+
+<!--BOXES HOLDING THE CARDS FOR EACH RESPECTIVE PLAYER-->
+
+	<HBox fx:id="player1Hand1" alignment="CENTER" layoutY="450" prefHeight="250" prefWidth="450" spacing="10" styleClass="cardPlacement"/>
+	<HBox fx:id="player2Hand2" alignment="CENTER" layoutX="478.0" layoutY="450" prefHeight="250" prefWidth="422.0" spacing="10" styleClass="cardPlacement" />
+	<HBox fx:id="dealerHand1" alignment="CENTER" layoutX="253.0" layoutY="98.0" prefHeight="250" prefWidth="400" spacing="10" styleClass="cardPlacement" />
+	<Label layoutX="410.0" layoutY="46.0" styleClass="player-labels" text="Dealer" />
+
+	<Label layoutX="152.0" layoutY="728.0" styleClass="player-labels" text="Player 1" />
+	<Label layoutX="698.0" layoutY="728.0" styleClass="player-labels" text="Player 2" />
+
 </Pane>

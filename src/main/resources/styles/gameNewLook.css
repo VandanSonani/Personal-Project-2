@@ -1,0 +1,30 @@
+.cardPlacement {
+    -fx-background-color: #804ab5;
+    -fx-transition: -fx-background-color 5s;
+}
+
+.cardPlacement:hover {
+    -fx-background-color: #c889fd;
+}
+
+.pane{
+    -fx-background-color: #474561;
+    -fx-border-color: #787697;
+}
+
+.menubar {
+    -fx-background-color: #787697;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+}
+
+.player-labels{
+    -fx-font-size: 24;
+    -fx-font-weight: bold;
+    -fx-font-family: "Kannada MN";
+    -fx-text-fill: white;
+}
+
+.bet-labels{
+    -fx-text-fill: white;
+}

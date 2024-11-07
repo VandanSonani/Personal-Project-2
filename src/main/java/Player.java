@@ -6,6 +6,8 @@ public class Player {
     private int playBet;
     private int pairPlusBet;
     private int totalWinnings;
+    private int Cash;
+    private int Cash2;
 
     public Player() {
         this.hand = new ArrayList<>();
@@ -13,7 +15,27 @@ public class Player {
         this.playBet = 0;
         this.pairPlusBet = 0;
         this.totalWinnings = 0;
+        this.Cash = 25;
+        this.Cash2 = 25;
     }
+
+
+    public int getCash() {
+        return Cash;
+    }
+
+    public void setCash(int Cash) {
+        this.Cash = Cash;
+    }
+
+    public int getCash2() {
+        return Cash2;
+    }
+
+    public void setCash2(int Cash2) {
+        this.Cash2 = Cash2;
+    }
+
 
     public ArrayList<Card> getHand() {
         return hand;

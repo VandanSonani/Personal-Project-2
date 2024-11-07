@@ -32,6 +32,7 @@ public class Card {
             return "Jack";
         }
         else {
+            System.out.println("Something went wrong");
             return String.valueOf(value);
         }
     }

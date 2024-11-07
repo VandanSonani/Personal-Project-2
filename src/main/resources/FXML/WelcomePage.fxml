@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.paint.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.text.Font?>
 <Pane prefHeight="850.0" prefWidth="900.0" styleClass="pane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MyController">
+
+
+<!--BOX CONTAINING THE LABEL AND BOTH BUTTONS.-->
     <VBox fx:id="root" alignment="CENTER" prefHeight="850.0" prefWidth="900.0" styleClass="vbox">
-        <Label alignment="CENTER" prefHeight="264.0" prefWidth="314.0" text="Welcome to 3-Card Poker" textAlignment="CENTER" wrapText="true">
+        <Label alignment="CENTER" prefHeight="264.0" prefWidth="314.0" text="Welcome to 3-Card Poker" textAlignment="CENTER" wrapText="true" styleClass="title-label">
             <font>
                 <Font name="Kannada MN" size="47.0" />
             </font>
@@ -17,7 +19,7 @@
                 <Insets bottom="50.0" />
             </padding>
             <textFill>
-                <LinearGradient endX="1.0" endY="1.0">
+                <LinearGradient>
                     <stops>
                         <Stop>
                             <color>
@@ -34,9 +36,11 @@
             </textFill>
         </Label>
 
+<!--BOTH PLAY AND EXIT BUTTONS, PLACED HERE-->
+
         <Button fx:id="playGame" alignment="CENTER" contentDisplay="CENTER" onAction="#loadGamePage" prefHeight="51.0" prefWidth="180.0" styleClass="button-play" text="Play" textAlignment="CENTER">
             <font>
-                <Font name="Kannada MN" size="25.0" />
+                <Font name="Kannada MN" size="20.0" />
             </font>
             <VBox.margin>
                 <Insets bottom="25.0" />
@@ -45,10 +49,12 @@
 
         <Button fx:id="exitGame" alignment="CENTER" contentDisplay="CENTER" onAction="#handleExit" prefHeight="50.0" prefWidth="180.0" styleClass="button-exit" text="Exit" textAlignment="CENTER">
             <font>
-                <Font name="Kefa Regular" size="25.0" />
+                <Font name="Kefa Regular" size="20.0" />
             </font>
         </Button>
     </VBox>
+
+<!--MENU BAR HOLDING OTHER OPTIONS FOR THE USER-->
     <MenuBar prefHeight="30.0" prefWidth="81.0" styleClass="menubar">
         <menus>
             <Menu mnemonicParsing="false" text="Options">
@@ -56,15 +62,12 @@
                     <MenuItem mnemonicParsing="false" text="Exit" onAction = "#exitApplication"/>
                 </items>
                 <items>
-                    <MenuItem mnemonicParsing="false" text="Fresh Start" />
+                    <MenuItem mnemonicParsing="false" text="Fresh Start" onAction="#freshStartMethod"/>
                 </items>
                 <items>
-                    <MenuItem mnemonicParsing="false" text="NewLook" />
+                    <MenuItem mnemonicParsing="false" text="NewLook" onAction="#applyNewLook"/>
                 </items>
             </Menu>
         </menus>
-        <effect>
-            <DropShadow radius="5.5775" width="3.31" />
-        </effect>
     </MenuBar>
 </Pane>

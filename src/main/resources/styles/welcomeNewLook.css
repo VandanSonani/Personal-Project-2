@@ -1,0 +1,47 @@
+.pane {
+    -fx-background-color: purple;
+}
+
+.vbox {
+    -fx-background-color: #464561;
+    -fx-border-color: #787897;
+    -fx-border-width: 100;
+}
+
+.button-play {
+    -fx-background-color: #804ab5;
+    -fx-text-fill: white;
+    -fx-background-radius: 50;
+}
+
+.button-play:hover{
+    -fx-background-color: #c889fd;
+}
+
+.button-exit {
+    -fx-background-color: #000000;
+    -fx-border-width: 2;
+    -fx-text-fill: white;
+    -fx-background-radius: 50;
+}
+
+.button-exit:hover{
+    -fx-background-color: #323232;
+}
+
+.menubar {
+    -fx-background-color: #787697;
+    -fx-border-color: white;
+    -fx-border-width: 2;
+}
+
+.title-label{
+    -fx-font-size: 47;
+    -fx-font-weight: bold;
+    -fx-text-fill: #7c00cf;
+    -fx-font-family: "Kannada MN";
+}
+
+
+
+
