@@ -59,7 +59,7 @@
 
 <!--BOXES HOLDING THE CARDS FOR EACH RESPECTIVE PLAYER-->
 
-	<HBox fx:id="player1Hand1" alignment="CENTER" layoutY="450" prefHeight="250" prefWidth="450" spacing="10" styleClass="cardPlacement" />
+	<HBox fx:id="player1Hand1" alignment="CENTER" layoutY="450" prefHeight="250" prefWidth="450" spacing="10" styleClass="cardPlacement"/>
 	<HBox fx:id="player2Hand2" alignment="CENTER" layoutX="478.0" layoutY="450" prefHeight="250" prefWidth="422.0" spacing="10" styleClass="cardPlacement" />
 	<HBox fx:id="dealerHand1" alignment="CENTER" layoutX="253.0" layoutY="98.0" prefHeight="250" prefWidth="400" spacing="10" styleClass="cardPlacement" />
 	<Label layoutX="410.0" layoutY="46.0" styleClass="player-labels" text="Dealer" />

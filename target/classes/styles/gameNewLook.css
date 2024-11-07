@@ -1,12 +1,10 @@
-.cardPlacement{
+.cardPlacement {
     -fx-background-color: #804ab5;
-    -fx-transition: -fx-background-color 5s; /* Transition effect for background color */
-
+    -fx-transition: -fx-background-color 5s;
 }
 
-.cardPlacement:hover{
-    -fx-background-color: #c889fd; /* Initial background color */
-
+.cardPlacement:hover {
+    -fx-background-color: #c889fd;
 }
 
 .pane{
