@@ -28,3 +28,21 @@
 .bet-labels{
     -fx-text-fill: white;
 }
+
+.hand-dealt{
+    -fx-text-fill: #ffc8c8;
+    -fx-font-size: 25;
+    -fx-font-family: "Kannada MN";
+}
+
+.game-buttons{
+    -fx-background-color: #a3a3a3;
+    -fx-font-family: "Kannada MN";
+    -fx-border-color: white;
+    -fx-border-width: 2;
+}
+
+.game-buttons:hover{
+
+    -fx-background-color: #f4f4f4;
+}

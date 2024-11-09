@@ -30,14 +30,15 @@
 }
 
 .menubar {
-	-fx-background-color: #006400;
-	-fx-border-color: white;
+	-fx-background-color: #1b971b;
+	-fx-border-color: #808080;
 	-fx-border-width: 2;
 }
 
 .title-label{
 	-fx-font-size: 47;
 	-fx-font-weight: bold;
+	-fx-text-fill: white;
 	-fx-font-family: "Kannada MN";
 
 }

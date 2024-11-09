@@ -50,22 +50,22 @@ public class ThreeCardLogic {
         return 0; // Tie
     }
 
-    private static boolean isFlush(ArrayList<Card> hand) {
+    public static boolean isFlush(ArrayList<Card> hand) {
         char suit = hand.get(0).getSuit();
         return hand.stream().allMatch(card -> card.getSuit() == suit);
     }
 
-    private static boolean isStraight(ArrayList<Card> hand) {
+    public static boolean isStraight(ArrayList<Card> hand) {
         return hand.get(1).getValue() == hand.get(0).getValue() + 1 &&
                 hand.get(2).getValue() == hand.get(1).getValue() + 1;
     }
 
-    private static boolean isThreeOfAKind(ArrayList<Card> hand) {
+    public static boolean isThreeOfAKind(ArrayList<Card> hand) {
         return hand.get(0).getValue() == hand.get(1).getValue() &&
                 hand.get(1).getValue() == hand.get(2).getValue();
     }
 
-    private static boolean isPair(ArrayList<Card> hand) {
+    public static boolean isPair(ArrayList<Card> hand) {
         return hand.get(0).getValue() == hand.get(1).getValue() ||
                 hand.get(1).getValue() == hand.get(2).getValue() ||
                 hand.get(0).getValue() == hand.get(2).getValue();

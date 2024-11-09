@@ -16,7 +16,7 @@
 
 .cardPlacement:hover {
 	transtion: 0.3s;
-	-fx-background-color: #3d573b;
+	-fx-background-color: #668e64;
 }
 
 
@@ -30,4 +30,22 @@
 	-fx-font-size: 20;
 	-fx-font-weight: bold;
 	-fx-font-family: "Kannada MN";
+}
+
+.hand-dealt{
+	-fx-text-fill: #8f8f8f;
+	-fx-font-size: 25;
+	-fx-font-family: "Kannada MN";
+}
+
+.game-buttons{
+	-fx-background-color: #a3a3a3;
+	-fx-font-family: "Kannada MN";
+	-fx-border-color: white;
+	-fx-border-width: 2;
+}
+
+.game-buttons:hover{
+
+	-fx-background-color: #f4f4f4;
 }

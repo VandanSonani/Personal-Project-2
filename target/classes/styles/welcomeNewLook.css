@@ -25,9 +25,10 @@
     -fx-background-radius: 50;
 }
 
-.button-exit:hover{
+.button-exit:hover {
     -fx-background-color: #323232;
 }
+
 
 .menubar {
     -fx-background-color: #787697;

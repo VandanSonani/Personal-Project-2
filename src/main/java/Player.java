@@ -56,8 +56,6 @@ public class Player {
     public void setAnteBet(int anteBet) {
         if (anteBet >= 5 && anteBet <= 25) {
             this.anteBet = anteBet;
-        } else {
-            throw new IllegalArgumentException("Ante bet must be between $5 and $25");
         }
     }
 

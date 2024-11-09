@@ -1,29 +1,32 @@
-
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.Scene;
-import javafx.scene.control.*;
-import javafx.stage.Stage;
-import javafx.fxml.FXMLLoader;
-import javafx.fxml.Initializable;
-import javafx.scene.Parent;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.HBox;
-
 public class MyController implements Initializable {
 
     public Button exitGame;
+    private ArrayList<String> sheetArray = new ArrayList<>();
+    private ArrayList<String> welcomeArray = new ArrayList<>();
+
 
     public Button playGame;
+    private int sheetIndex = 0;
 
     public Player player1;
     public Player player2;
@@ -64,6 +67,14 @@ public class MyController implements Initializable {
 
 
     @FXML
+    private Label player1HandTypeLabel;
+    @FXML
+    private Label player2HandTypeLabel;
+    @FXML
+    private Label dealerHandTypeLabel;
+
+
+    @FXML
     private HBox player1Hand1;
     @FXML
     private HBox player2Hand2;
@@ -90,7 +101,6 @@ public class MyController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         // TODO Auto-generated method stub
-
 
 
     }
@@ -121,33 +131,107 @@ public class MyController implements Initializable {
         });
     }
 
-    // changes the stylesheet of the application changing the visual background of the gameplay.
     @FXML
-    private void applyNewLook() {
-        Scene mainScene = root.getScene();
-        if (mainScene != null) {
-            mainScene.getStylesheets().add("/styles/welcomeNewLook.css");
+     private Boolean isNumeric(String s){
+        try{
+            Double.parseDouble(s);
+            return true;
+        }catch(NumberFormatException e){
+            return false;
         }
     }
 
+//    Ante.setPromptText("Enter Ante Bet");
+
+    // changes the stylesheet of the application changing the visual background of the gameplay.
+
     @FXML
     private void applyGameNewLook(ActionEvent e) {
-        root2.getStylesheets().add("/styles/gameNewLook.css");
+//        root2.getStylesheets().add("/styles/gameNewLook.css");
+
+
+        if(root2 != null){
+            root2.getStylesheets().clear();
+            sheetArray.clear();
+
+        }
+        if(root != null){
+            root.getStylesheets().clear();
+            welcomeArray.clear();
+
+        }
+
+        sheetArray.add("/styles/style2.css");
+        sheetArray.add("/styles/gameNewLook.css");
+
+        welcomeArray.add("/styles/style1.css");
+        welcomeArray.add("/styles/welcomeNewLook.css");
+
+        sheetIndex = (sheetIndex + 1) % sheetArray.size();
+        String currentSheet = sheetArray.get(sheetIndex);
+        String currentWelcomeSheet = welcomeArray.get(sheetIndex);
+        if(root2 !=null ){
+            root2.getStylesheets().add(currentSheet);
+        }
+        if(root!=null){
+            root.getStylesheets().add(currentWelcomeSheet);
+        }
 
     }
 
     //completely restarts the game, resetting all the previous bets made and hands dealt, going back to the welcome screen.
     @FXML
     private void freshStartMethod(ActionEvent event) {
-        try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("WelcomePage.fxml"));
-            Stage stage = new Stage();
-            stage.setScene(new Scene(loader.load()));
-            stage.show();
-        }
-        catch (IOException e) {
-            e.printStackTrace();
-        }
+        setDefaults();
+    }
+
+    @FXML
+    private void setDefaults() {
+        player1Hand1.getChildren().clear();
+        player2Hand2.getChildren().clear();
+        dealerHand1.getChildren().clear();
+        Ante.setPromptText("Enter Ante Bet");
+        Ante2.setPromptText("Enter Ante Bet");
+        PairPlus.setPromptText("Enter Pair Plus Bet");
+        PairPlus2.setPromptText("Enter Pair Plus Bet");
+
+        playerOne.setTotalWinnings(0);
+        playerTwo.setTotalWinnings(0);
+        player1HandTypeLabel.setText("");
+        player2HandTypeLabel.setText("");
+        dealerHandTypeLabel.setText("");
+
+        Ante.setText("");
+        Ante2.setText("");
+        PlayBet.setText("0");
+        PlayBet2.setText("0");
+        PairPlus.setText("");
+        PairPlus2.setText("");
+        Cash.setText("0");
+        Cash2.setText("0");
+        Ante.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+
+            if(!isNumeric(keyEvent.getCharacter())){
+                keyEvent.consume();
+            }
+        });
+        Ante2.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+            if(!isNumeric(keyEvent.getCharacter())){
+                keyEvent.consume();
+            }
+        });
+        PairPlus.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+            if(!isNumeric(keyEvent.getCharacter())){
+                keyEvent.consume();
+            }
+        });
+        PairPlus2.addEventFilter(KeyEvent.KEY_TYPED, keyEvent -> {
+            if(!isNumeric(keyEvent.getCharacter())){
+                keyEvent.consume();
+            }
+        });
+
+
     }
 
 
@@ -158,8 +242,12 @@ public class MyController implements Initializable {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/FXML/GamePage.fxml"));
             Parent root2 = loader.load();
+//            root2.getStylesheets().add(sheetArray.get(sheetIndex));//set style
             root2.getStylesheets().add("/styles/style2.css");//set style
             root.getScene().setRoot(root2);
+            MyController controller = loader.getController();
+            controller.setDefaults();
+
 
         }
         catch (IOException e) {
@@ -167,15 +255,26 @@ public class MyController implements Initializable {
         }
     }
 
-    private void makeTextFieldNumericOnly(TextField textField) {
-        textField.setTextFormatter(new TextFormatter<>(change -> {
-            String newText = change.getControlNewText();
-
-            if (newText.matches("\\d*")) {
-                return change;
-            }
-            return null;
-        }));
+    private String getHandType(ArrayList<Card> hand) {
+        // Implement the logic to determine the hand type (flush, straight, high-card, etc.)
+        // This is a placeholder implementation
+        if (ThreeCardLogic.isPair(hand)) {
+            return "Pair";
+        } else if (ThreeCardLogic.isStraight(hand)) {
+            return "Straight";
+        }
+        else if(ThreeCardLogic.isFlush(hand)){
+            return "Flush";
+        }
+        else if(ThreeCardLogic.isThreeOfAKind(hand)){
+            return "Three of a Kind";
+        }
+        else if(ThreeCardLogic.isStraight(hand) && ThreeCardLogic.isFlush(hand)){
+            return "Straight Flush";
+        }
+                else {
+            return "High Card";
+        }
     }
 
 
@@ -183,10 +282,11 @@ public class MyController implements Initializable {
 
     @FXML
     private void dealCardsFunc() {
-        // Clear existing hands
+        dealerHandTypeLabel.setText("");
         playerOne.setHand(dealer.dealHand());
         playerTwo.setHand(dealer.dealHand());
         dealer.dealersHand = dealer.dealHand();
+
 
         System.out.println("Player 1 Hand: " + playerOne.getHand());
         System.out.println("Player 2 Hand: " + playerTwo.getHand());
@@ -211,6 +311,9 @@ public class MyController implements Initializable {
         displayHand(playerOne.getHand(), player1Hand1, false);
         displayHand(playerTwo.getHand(), player2Hand2, false);
         displayHand(dealer.dealersHand, dealerHand1, true);
+
+        player1HandTypeLabel.setText(getHandType(playerOne.getHand()));
+        player2HandTypeLabel.setText(getHandType(playerTwo.getHand()));
 
 
     }
@@ -271,14 +374,16 @@ public class MyController implements Initializable {
         if (playerNumber == 1) {
             isPlayer1Folded = true;
             displayHand(playerOne.getHand(), player1Hand1, true);
+            player1HandTypeLabel.setText("Folded");
             showFoldMessage("Player 1 has folded. Dealer wins this round!");
         } else if (playerNumber == 2) {
             isPlayer2Folded = true;
             displayHand(playerTwo.getHand(), player2Hand2, true);
-
+            player2HandTypeLabel.setText("Folded");
             showFoldMessage("Player 2 has folded. Dealer wins this round!");
         }
     }
+
 
 
     //<----PLAYING CURRENT CARDS FUNCTIONALITY---->
@@ -303,6 +408,12 @@ public class MyController implements Initializable {
         // Show dealer's hand
         displayHand(dealer.dealersHand, dealerHand1, false);
 
+        dealerHandTypeLabel.setText(getHandType(dealer.dealersHand));
+
+
+        StringBuilder resultMessage = new StringBuilder();
+
+
         // Process results for Player 1 if they haven't folded
         if (!isPlayer1Folded) {
             int player1Result = ThreeCardLogic.compareHands(dealer.dealersHand, playerOne.getHand());
@@ -311,9 +422,10 @@ public class MyController implements Initializable {
 
             // Update winnings or losses based on result
             updatePlayerWinnings(playerOne, player1Result, player1AnteBet, player1PairPlusBet);
+
         }
         else{
-            playerOne.setCash(playerOne.getTotalWinnings() - playerOne.getAnteBet() + playerOne.getPairPlusBet());
+            playerOne.setTotalWinnings(playerOne.getTotalWinnings() - (playerOne.getAnteBet() + playerOne.getPairPlusBet()));
         }
 
         // Process results for Player 2 if they haven't folded
@@ -324,16 +436,15 @@ public class MyController implements Initializable {
 
             // Update winnings or losses based on result
             updatePlayerWinnings(playerTwo, player2Result, player2AnteBet, player2PairPlusBet);
+
         }
         else{
-            playerTwo.setCash2(playerTwo.getTotalWinnings() - playerTwo.getAnteBet() + playerTwo.getPairPlusBet());
-
+            playerTwo.setTotalWinnings(playerTwo.getTotalWinnings() - (playerTwo.getAnteBet() + playerTwo.getPairPlusBet()));
         }
+
+
     }
 
-    /**
-     * Updates the player's cash based on the game results.
-     */
     private void updatePlayerWinnings(Player player, int result, int anteBet, int pairPlusBet) {
         int pairPlusWinnings = ThreeCardLogic.evalPPWinnings(player.getHand(), pairPlusBet);
 
@@ -343,7 +454,7 @@ public class MyController implements Initializable {
         else if (result == 2 || !isPlayer1Folded || !isPlayer2Folded) { // Player wins
             player.updateWinnings(anteBet * 2); // Payout for ante
         }
-        else if(result == -1){
+        else if(result == -1){ // Dealer does not qualify
             player.setTotalWinnings(player.getTotalWinnings() + anteBet + pairPlusWinnings);
         }
 
@@ -351,7 +462,8 @@ public class MyController implements Initializable {
 
         if (player == playerOne) {
             Cash.setText(String.valueOf(player.getTotalWinnings()));
-        } else if (player == playerTwo) {
+        }
+        if (player == playerTwo) {
             Cash2.setText(String.valueOf(player.getTotalWinnings()));
         }
     }

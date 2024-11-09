@@ -4,7 +4,6 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.paint.*?>
 <?import javafx.scene.text.Font?>
 <Pane prefHeight="850.0" prefWidth="900.0" styleClass="pane" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="MyController">
 
@@ -12,28 +11,10 @@
 <!--BOX CONTAINING THE LABEL AND BOTH BUTTONS.-->
     <VBox fx:id="root" alignment="CENTER" prefHeight="850.0" prefWidth="900.0" styleClass="vbox">
         <Label alignment="CENTER" prefHeight="264.0" prefWidth="314.0" text="Welcome to 3-Card Poker" textAlignment="CENTER" wrapText="true" styleClass="title-label">
-            <font>
-                <Font name="Kannada MN" size="47.0" />
-            </font>
+
             <padding>
                 <Insets bottom="50.0" />
             </padding>
-            <textFill>
-                <LinearGradient>
-                    <stops>
-                        <Stop>
-                            <color>
-                                <Color red="0.296" green="1.0" blue="0.129" />
-                            </color>
-                        </Stop>
-                        <Stop offset="1.0">
-                            <color>
-                                <Color red="1.0" green="1.0" blue="1.0" />
-                            </color>
-                        </Stop>
-                    </stops>
-                </LinearGradient>
-            </textFill>
         </Label>
 
 <!--BOTH PLAY AND EXIT BUTTONS, PLACED HERE-->
@@ -56,18 +37,9 @@
 
 <!--MENU BAR HOLDING OTHER OPTIONS FOR THE USER-->
     <MenuBar prefHeight="30.0" prefWidth="81.0" styleClass="menubar">
-        <menus>
-            <Menu mnemonicParsing="false" text="Options">
-                <items>
-                    <MenuItem mnemonicParsing="false" text="Exit" onAction = "#exitApplication"/>
-                </items>
-                <items>
-                    <MenuItem mnemonicParsing="false" text="Fresh Start" onAction="#freshStartMethod"/>
-                </items>
-                <items>
-                    <MenuItem mnemonicParsing="false" text="NewLook" onAction="#applyNewLook"/>
-                </items>
-            </Menu>
-        </menus>
+        <Menu mnemonicParsing="false" text="Options">
+            <MenuItem mnemonicParsing="false" text="Exit" onAction="#exitApplication"/>
+            <MenuItem mnemonicParsing="false" text="NewLook" onAction="#applyGameNewLook"/>
+        </Menu>
     </MenuBar>
 </Pane>

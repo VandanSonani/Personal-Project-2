@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="MyTest" time="0.024" tests="8" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report.xsd" name="MyTest" time="0.031" tests="17" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="22"/>
     <property name="sun.jnu.encoding" value="UTF-8"/>
@@ -12,7 +12,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="/opt/homebrew/Cellar/openjdk/22.0.2/libexec/openjdk.jdk/Contents/Home/lib"/>
-    <property name="sun.java.command" value="/Users/vandan/Desktop/CS 342/vsona2Project2/target/surefire/surefirebooter11607091775365315233.jar /Users/vandan/Desktop/CS 342/vsona2Project2/target/surefire 2024-10-31T11-09-12_159-jvmRun1 surefire1214191992763766856tmp surefire_014515986500503486404tmp"/>
+    <property name="sun.java.command" value="/Users/vandan/Desktop/CS 342/vsona2Project2/target/surefire/surefirebooter17503512713586752523.jar /Users/vandan/Desktop/CS 342/vsona2Project2/target/surefire 2024-11-08T10-54-38_207-jvmRun1 surefire4744521674971995333tmp surefire_09188981152689642820tmp"/>
     <property name="http.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="/Users/vandan/Desktop/CS 342/vsona2Project2/target/test-classes:/Users/vandan/Desktop/CS 342/vsona2Project2/target/classes:/Users/vandan/.m2/repository/org/junit/jupiter/junit-jupiter/5.9.1/junit-jupiter-5.9.1.jar:/Users/vandan/.m2/repository/org/junit/jupiter/junit-jupiter-api/5.9.1/junit-jupiter-api-5.9.1.jar:/Users/vandan/.m2/repository/org/opentest4j/opentest4j/1.2.0/opentest4j-1.2.0.jar:/Users/vandan/.m2/repository/org/junit/platform/junit-platform-commons/1.9.1/junit-platform-commons-1.9.1.jar:/Users/vandan/.m2/repository/org/apiguardian/apiguardian-api/1.1.2/apiguardian-api-1.1.2.jar:/Users/vandan/.m2/repository/org/junit/jupiter/junit-jupiter-params/5.9.1/junit-jupiter-params-5.9.1.jar:/Users/vandan/.m2/repository/org/junit/jupiter/junit-jupiter-engine/5.9.1/junit-jupiter-engine-5.9.1.jar:/Users/vandan/.m2/repository/org/junit/platform/junit-platform-engine/1.9.1/junit-platform-engine-1.9.1.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-controls/19.0.2.1/javafx-controls-19.0.2.1.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-controls/19.0.2.1/javafx-controls-19.0.2.1-mac-aarch64.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-graphics/19.0.2.1/javafx-graphics-19.0.2.1.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-graphics/19.0.2.1/javafx-graphics-19.0.2.1-mac-aarch64.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-base/19.0.2.1/javafx-base-19.0.2.1.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-base/19.0.2.1/javafx-base-19.0.2.1-mac-aarch64.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-fxml/19.0.2.1/javafx-fxml-19.0.2.1.jar:/Users/vandan/.m2/repository/org/openjfx/javafx-fxml/19.0.2.1/javafx-fxml-19.0.2.1-mac-aarch64.jar:"/>
@@ -29,7 +29,7 @@
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
     <property name="apple.awt.application.name" value="ForkedBooter"/>
-    <property name="surefire.real.class.path" value="/Users/vandan/Desktop/CS 342/vsona2Project2/target/surefire/surefirebooter11607091775365315233.jar"/>
+    <property name="surefire.real.class.path" value="/Users/vandan/Desktop/CS 342/vsona2Project2/target/surefire/surefirebooter17503512713586752523.jar"/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="ftp.nonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.runtime.version" value="22.0.2"/>
@@ -59,12 +59,21 @@
     <property name="socksNonProxyHosts" value="local|*.local|169.254/16|*.169.254/16"/>
     <property name="java.class.version" value="66.0"/>
   </properties>
-  <testcase name="testInvalidSuit" classname="MyTest" time="0.011"/>
-  <testcase name="testNewDeckAfterDealing" classname="MyTest" time="0.001"/>
-  <testcase name="testShuffleChangesOrder" classname="MyTest" time="0.002"/>
-  <testcase name="testRemainingCards" classname="MyTest" time="0.001"/>
-  <testcase name="testNewDeckHas52Cards" classname="MyTest" time="0"/>
-  <testcase name="GetHighCardNames" classname="MyTest" time="0"/>
+  <testcase name="testStraight" classname="MyTest" time="0.009"/>
+  <testcase name="testInvalidSuit" classname="MyTest" time="0.004"/>
+  <testcase name="testNewDeckHasAllCards" classname="MyTest" time="0.001"/>
+  <testcase name="testFlush" classname="MyTest" time="0.001"/>
+  <testcase name="testPair" classname="MyTest" time="0"/>
+  <testcase name="testHighCard" classname="MyTest" time="0.001"/>
+  <testcase name="testStraightFlush" classname="MyTest" time="0"/>
+  <testcase name="testNewDeckAfterDealing" classname="MyTest" time="0"/>
+  <testcase name="testEvalPPWinnings" classname="MyTest" time="0.001"/>
+  <testcase name="testThreeOfKind" classname="MyTest" time="0"/>
+  <testcase name="testShuffleChangesOrder" classname="MyTest" time="0.003"/>
+  <testcase name="testRemainingCards" classname="MyTest" time="0"/>
+  <testcase name="testNewDeckHas52Cards" classname="MyTest" time="0.001"/>
+  <testcase name="GetHighCardNames" classname="MyTest" time="0.001"/>
+  <testcase name="testDealEmptyDeck" classname="MyTest" time="0"/>
   <testcase name="testValidCardCreation" classname="MyTest" time="0"/>
   <testcase name="testLowercaseSuitIsAccepted" classname="MyTest" time="0"/>
 </testsuite>
