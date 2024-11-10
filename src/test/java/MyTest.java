@@ -127,23 +127,18 @@ class MyTest {
 	void testNewDeckHasAllCards() {
 		// Count number of each suit
 		int hearts = 0, diamonds = 0, clubs = 0, spades = 0;
-
 		for (Card card : deck) {
-			switch (card.getSuit()) {
-				case 'H':
-					hearts++;
-					break;
-				case 'D':
-					diamonds++;
-					break;
-				case 'C':
-					clubs++;
-					break;
-				case 'S':
-					spades++;
-					break;
+			if (card.getSuit() == 'H') {
+				hearts++;
+			} else if (card.getSuit() == 'D') {
+				diamonds++;
+			} else if (card.getSuit() == 'C') {
+				clubs++;
+			} else if (card.getSuit() == 'S') {
+				spades++;
 			}
 		}
+
 		System.out.println("Hearts: " + hearts);
 		System.out.println("Diamonds: " + diamonds);
 		System.out.println("Clubs: " + clubs);
@@ -236,7 +231,7 @@ class MyTest {
 	void testEvalPPWinnings() {
 		int bet = 10;
 
-		// Test Straight Flush (40:1)
+		//  (40:1)
 		ArrayList<Card> straightFlush = new ArrayList<>(Arrays.asList(
 				new Card('H', 10),
 				new Card('H', 9),
@@ -244,7 +239,7 @@ class MyTest {
 		));
 		assertEquals(400, ThreeCardLogic.evalPPWinnings(straightFlush, bet));
 
-		// Test Three of a Kind (30:1)
+		//  (30:1)
 		ArrayList<Card> threeOfKind = new ArrayList<>(Arrays.asList(
 				new Card('H', 10),
 				new Card('D', 10),
@@ -261,12 +256,139 @@ class MyTest {
 		assertEquals(0, ThreeCardLogic.evalPPWinnings(highCard, bet));
 	}
 
+	@Test
+	void testPairVariations() {
+		// Test pair with high card
+		ArrayList<Card> highPair = new ArrayList<>();
+		highPair.add(new Card('H', 14)); // Ace
+		highPair.add(new Card('D', 14)); // Ace
+		highPair.add(new Card('S', 13)); // King
+		assertEquals(5, ThreeCardLogic.evalHand(highPair));
+
+		// Test pair with low card
+		ArrayList<Card> lowPair = new ArrayList<>();
+		lowPair.add(new Card('H', 2));
+		lowPair.add(new Card('D', 2));
+		lowPair.add(new Card('S', 3));
+		assertEquals(5, ThreeCardLogic.evalHand(lowPair));
+	}
+
+
+	@Test
+	void testCompareHandsComprehensive() {
+		// Dealer doesn't qualify (no queen or higher)
+		ArrayList<Card> dealerNoQualify = new ArrayList<>();
+		dealerNoQualify.add(new Card('H', 2));
+		dealerNoQualify.add(new Card('D', 5));
+		dealerNoQualify.add(new Card('S', 10));
+		System.out.println("Dealer No Qualify: " + ThreeCardLogic.compareHands(dealerNoQualify, dealerNoQualify));
+
+		ArrayList<Card> playerHand = new ArrayList<>();
+		playerHand.add(new Card('H', 2));
+		playerHand.add(new Card('D', 3));
+		playerHand.add(new Card('S', 4));
+		System.out.println("Player Hand: " + ThreeCardLogic.compareHands(dealerNoQualify, playerHand));
+
+		assertEquals(-1, ThreeCardLogic.compareHands(dealerNoQualify, playerHand));
+
+		// Equal hands, compare high cards
+		ArrayList<Card> dealerHighCard = new ArrayList<>();
+		dealerHighCard.add(new Card('H', 14)); // Ace
+		dealerHighCard.add(new Card('D', 5));
+		dealerHighCard.add(new Card('S', 3));
+		System.out.println("Dealer High Card: " + ThreeCardLogic.compareHands(dealerHighCard, dealerHighCard));
+
+		ArrayList<Card> playerLowerCard = new ArrayList<>();
+		playerLowerCard.add(new Card('C', 13)); // King
+		playerLowerCard.add(new Card('H', 5));
+		playerLowerCard.add(new Card('D', 3));
+		System.out.println("Player Lower Card: " + ThreeCardLogic.compareHands(dealerHighCard, playerLowerCard));
+
+		assertEquals(1, ThreeCardLogic.compareHands(dealerHighCard, playerLowerCard));
+	}
+
+	@Test
+	void testPPWinningsEdgeCases() {
+		int bet = 25;
+
+		// Test straight flush with minimum bet
+		ArrayList<Card> straightFlush = new ArrayList<>();
+		straightFlush.add(new Card('H', 2));
+		straightFlush.add(new Card('H', 3));
+		straightFlush.add(new Card('H', 4));
+		System.out.println("Straight Flush: " + ThreeCardLogic.evalPPWinnings(straightFlush, bet));
+		assertEquals(1000, ThreeCardLogic.evalPPWinnings(straightFlush, bet));
+
+		// Test Three of a Kind with maximum value cards
+		ArrayList<Card> threeAces = new ArrayList<>();
+		threeAces.add(new Card('H', 14));
+		threeAces.add(new Card('D', 14));
+		threeAces.add(new Card('S', 14));
+		System.out.println("Three Aces: " + ThreeCardLogic.evalPPWinnings(threeAces, bet));
+		assertEquals(750, ThreeCardLogic.evalPPWinnings(threeAces, bet));
+
+		// zero bet
+		ArrayList<Card> straight = new ArrayList<>();
+		straight.add(new Card('H', 3));
+		straight.add(new Card('D', 4));
+		straight.add(new Card('S', 5));
+		System.out.println("Straight: " + ThreeCardLogic.evalPPWinnings(straight, 0));
+		assertEquals(0, ThreeCardLogic.evalPPWinnings(straight, 0));
+	}
+
+
+	@Test
+	void testStraightEdgeCases() {
+		// Test Ace-2-3 straight (lowest possible)
+		ArrayList<Card> lowStraight = new ArrayList<>(Arrays.asList(
+				new Card('H', 2), // Ace
+				new Card('D', 3),
+				new Card('S', 4)
+		));
+		assertEquals(3, ThreeCardLogic.evalHand(lowStraight));
+
+		// Test Queen-King-Ace straight (highest possible)
+		ArrayList<Card> highStraight = new ArrayList<>(Arrays.asList(
+				new Card('H', 12), // Queen
+				new Card('C', 13), // King
+				new Card('S', 14)  // Ace
+		));
+		assertEquals(3, ThreeCardLogic.evalHand(highStraight));
+	}
+
+
+	@Test
+	void testDealerQualificationEdgeCases() {
+		ArrayList<Card> playerHand = new ArrayList<>(Arrays.asList(
+				new Card('H', 2),
+				new Card('D', 3),
+				new Card('S', 4)
+
+
+		));
+
+		// deal qualifies
+		ArrayList<Card> dealerQueenHigh = new ArrayList<>(Arrays.asList(
+				new Card('H', 12), // Queen
+				new Card('D', 5),
+				new Card('S', 2)
+		));
+		assertEquals(2, ThreeCardLogic.compareHands(dealerQueenHigh, playerHand));
+
+		//shouldn't qualify
+		ArrayList<Card> dealerJackHigh = new ArrayList<>(Arrays.asList(
+				new Card('H', 11), // Jack
+				new Card('D', 10),
+				new Card('S', 9)
+		));
+		assertEquals(1, ThreeCardLogic.compareHands(dealerJackHigh, playerHand));
+	}
+
+
+
 
 
 }
 
 
 
-
-
-//deck/card maybe and logic

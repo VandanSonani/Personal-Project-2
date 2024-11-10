@@ -3,7 +3,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -11,7 +10,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
@@ -260,7 +258,11 @@ public class MyController implements Initializable {
         // This is a placeholder implementation
         if (ThreeCardLogic.isPair(hand)) {
             return "Pair";
-        } else if (ThreeCardLogic.isStraight(hand)) {
+        }
+        else if(ThreeCardLogic.isStraight(hand) && ThreeCardLogic.isFlush(hand)){
+                return "Straight Flush";
+            }
+        else if (ThreeCardLogic.isStraight(hand)) {
             return "Straight";
         }
         else if(ThreeCardLogic.isFlush(hand)){
@@ -269,9 +271,7 @@ public class MyController implements Initializable {
         else if(ThreeCardLogic.isThreeOfAKind(hand)){
             return "Three of a Kind";
         }
-        else if(ThreeCardLogic.isStraight(hand) && ThreeCardLogic.isFlush(hand)){
-            return "Straight Flush";
-        }
+
                 else {
             return "High Card";
         }
@@ -342,6 +342,8 @@ public class MyController implements Initializable {
     }
 
 
+
+
     //<----FOLDING FUNCTIONALITY---->
 
     @FXML
@@ -376,12 +378,50 @@ public class MyController implements Initializable {
             displayHand(playerOne.getHand(), player1Hand1, true);
             player1HandTypeLabel.setText("Folded");
             showFoldMessage("Player 1 has folded. Dealer wins this round!");
+            playerOne.setTotalWinnings(playerOne.getTotalWinnings() - (playerOne.getAnteBet() + playerOne.getPairPlusBet()));
         } else if (playerNumber == 2) {
             isPlayer2Folded = true;
             displayHand(playerTwo.getHand(), player2Hand2, true);
             player2HandTypeLabel.setText("Folded");
             showFoldMessage("Player 2 has folded. Dealer wins this round!");
+            playerTwo.setTotalWinnings(playerTwo.getTotalWinnings() - (playerTwo.getAnteBet() + playerTwo.getPairPlusBet()));
+
         }
+    }
+
+
+    private void showWinInformation(String player1Result, String player2Result, boolean dealerQualified) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Game Results");
+        alert.setHeaderText("Results for this round");
+
+        TextArea textArea = new TextArea();
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+
+        StringBuilder content = new StringBuilder();
+        if (!dealerQualified) {
+            content.append("Dealer did not qualify.\n\n");
+        }
+        if (!player1Result.isEmpty()) {
+            content.append(player1Result).append("\n\n");
+        }
+        if (!player2Result.isEmpty()) {
+            content.append(player2Result);
+        }
+
+        textArea.setText(content.toString());
+
+        alert.getDialogPane().setContent(textArea);
+        alert.getDialogPane().setPrefSize(350, 235);
+
+        alert.showAndWait();
+    }
+
+    private boolean isDealerQualified(ArrayList<Card> hand, Player player) {
+        //call method in three card logic, compareHands, if it returns -1 then dealer did not qualify
+        int holder = ThreeCardLogic.compareHands(hand, player.getHand());
+        return holder != -1;
     }
 
 
@@ -393,6 +433,20 @@ public class MyController implements Initializable {
         if (isPlayer1Folded && isPlayer2Folded) {
             resetGameForNextRound();
             return;
+        }
+
+        //if ante bet is empty, set it to 0
+        if(Ante.getText().isEmpty()){
+            Ante.setText("0");
+        }
+        if(Ante2.getText().isEmpty()){
+            Ante2.setText("0");
+        }
+        if(PairPlus.getText().isEmpty()){
+            PairPlus.setText("0");
+        }
+        if(PairPlus2.getText().isEmpty()){
+            PairPlus2.setText("0");
         }
 
         // Disable fold buttons and re-enable betting fields for next round
@@ -410,37 +464,40 @@ public class MyController implements Initializable {
 
         dealerHandTypeLabel.setText(getHandType(dealer.dealersHand));
 
-
-        StringBuilder resultMessage = new StringBuilder();
+        String player1Result = "";
+        String player2Result = "";
+        boolean dealerQualified = isDealerQualified(dealer.dealersHand, playerOne) && isDealerQualified(dealer.dealersHand, playerTwo);
 
 
         // Process results for Player 1 if they haven't folded
         if (!isPlayer1Folded) {
-            int player1Result = ThreeCardLogic.compareHands(dealer.dealersHand, playerOne.getHand());
+            int player1ResultCode = ThreeCardLogic.compareHands(dealer.dealersHand, playerOne.getHand());
             int player1PairPlusBet = Integer.parseInt(PairPlus.getText());
             int player1AnteBet = Integer.parseInt(Ante.getText());
 
             // Update winnings or losses based on result
-            updatePlayerWinnings(playerOne, player1Result, player1AnteBet, player1PairPlusBet);
+            updatePlayerWinnings(playerOne, player1ResultCode, player1AnteBet, player1PairPlusBet);
 
-        }
-        else{
-            playerOne.setTotalWinnings(playerOne.getTotalWinnings() - (playerOne.getAnteBet() + playerOne.getPairPlusBet()));
+            player1Result = "Player 1: " + getHandType(playerOne.getHand()) + " vs Dealer: " + getHandType(dealer.dealersHand) + "\nTotal Winnings: " + playerOne.getTotalWinnings();
+
         }
 
         // Process results for Player 2 if they haven't folded
         if (!isPlayer2Folded) {
-            int player2Result = ThreeCardLogic.compareHands(dealer.dealersHand, playerTwo.getHand());
+            int player2ResultCode = ThreeCardLogic.compareHands(dealer.dealersHand, playerTwo.getHand());
             int player2PairPlusBet = Integer.parseInt(PairPlus2.getText());
             int player2AnteBet = Integer.parseInt(Ante2.getText());
 
             // Update winnings or losses based on result
-            updatePlayerWinnings(playerTwo, player2Result, player2AnteBet, player2PairPlusBet);
+            updatePlayerWinnings(playerTwo, player2ResultCode, player2AnteBet, player2PairPlusBet);
 
+            player2Result = "Player 2: " + getHandType(playerTwo.getHand()) + " vs Dealer: " + getHandType(dealer.dealersHand) + "\nTotal Winnings: " + playerTwo.getTotalWinnings();
         }
-        else{
-            playerTwo.setTotalWinnings(playerTwo.getTotalWinnings() - (playerTwo.getAnteBet() + playerTwo.getPairPlusBet()));
-        }
+
+        showWinInformation(player1Result, player2Result, dealerQualified);
+
+
+
 
 
     }
@@ -451,7 +508,7 @@ public class MyController implements Initializable {
         if (result == 1) { // Dealer wins
             player.setTotalWinnings(player.getTotalWinnings() - (anteBet * 2) - pairPlusBet);
         }
-        else if (result == 2 || !isPlayer1Folded || !isPlayer2Folded) { // Player wins
+        else if (result == 2) { // Player wins
             player.updateWinnings(anteBet * 2); // Payout for ante
         }
         else if(result == -1){ // Dealer does not qualify

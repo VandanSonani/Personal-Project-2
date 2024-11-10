@@ -18,6 +18,7 @@ public class ThreeCardLogic {
         return 0; // High Card
     }
 
+
     public static int evalPPWinnings(ArrayList<Card> hand, int bet) {
         int handType = evalHand(hand);
 
