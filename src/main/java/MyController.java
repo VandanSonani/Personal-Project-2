@@ -293,9 +293,42 @@ public class MyController implements Initializable {
         System.out.println("Dealer Hand: " + dealer.dealersHand);
         System.out.println("Cards left: " + dealer.theDeck.remainingCards());
 
+        if(Ante.getText().isEmpty()){
+            Ante.setText("0");
+        }
+
+        if(Integer.parseInt(Ante.getText()) > 25){
+            Ante.setText("25");
+        }
+        if(Ante2.getText().isEmpty()){
+            Ante2.setText("0");
+        }
+
+        if(Integer.parseInt(Ante2.getText()) > 25){
+            Ante2.setText("25");
+        }
+
+        if(PairPlus.getText().isEmpty()){
+            PairPlus.setText("0");
+        }
+        // check if Pair Plus bet is grreater than 25 or less than 5
+        if(Integer.parseInt(PairPlus.getText()) > 25){
+            PairPlus.setText("25");
+        }
+
+        if(PairPlus2.getText().isEmpty()){
+            PairPlus2.setText("0");
+        }
+
+        if(Integer.parseInt(PairPlus2.getText()) > 25){
+            PairPlus2.setText("25");
+        }
+
 
         PlayBet.setText(Ante.getText());
         PlayBet2.setText(Ante2.getText());
+
+
 
 
         foldPlayer1Button.setDisable(false);
@@ -436,18 +469,38 @@ public class MyController implements Initializable {
         }
 
         //if ante bet is empty, set it to 0
-        if(Ante.getText().isEmpty()){
-            Ante.setText("0");
-        }
-        if(Ante2.getText().isEmpty()){
-            Ante2.setText("0");
-        }
-        if(PairPlus.getText().isEmpty()){
-            PairPlus.setText("0");
-        }
-        if(PairPlus2.getText().isEmpty()){
-            PairPlus2.setText("0");
-        }
+//        if(Ante.getText().isEmpty()){
+//            Ante.setText("0");
+//        }
+//
+//        if(Integer.parseInt(Ante.getText()) > 25){
+//            Ante.setText("25");
+//        }
+//        if(Ante2.getText().isEmpty()){
+//            Ante2.setText("0");
+//        }
+//
+//        if(Integer.parseInt(Ante2.getText()) > 25){
+//            Ante2.setText("25");
+//        }
+//
+//        if(PairPlus.getText().isEmpty()){
+//            PairPlus.setText("0");
+//        }
+//        // check if Pair Plus bet is grreater than 25 or less than 5
+//        if(Integer.parseInt(PairPlus.getText()) > 25){
+//            PairPlus.setText("25");
+//        }
+//
+//        if(PairPlus2.getText().isEmpty()){
+//            PairPlus2.setText("0");
+//        }
+//
+//        if(Integer.parseInt(PairPlus2.getText()) > 25){
+//            PairPlus2.setText("25");
+//        }
+
+
 
         // Disable fold buttons and re-enable betting fields for next round
         foldPlayer1Button.setDisable(true);
